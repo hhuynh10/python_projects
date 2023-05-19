@@ -35,5 +35,6 @@ def get_book_with_authors(id):
 
 @app.route('/add/favoriteAuthor', methods=['POST'])
 def join_author():
+    id = request.form['book_id']
     author.Author.add_favorite(request.form)
-    return redirect("/")
+    return redirect(f"/books/book/{id}")
