@@ -34,6 +34,7 @@ class Recipe:
         SELECT * FROM recipes
         LEFT JOIN users
         ON recipes.user_id = users.id
+        ORDER BY recipes.name
         ;"""
         result = connectToMySQL(cls.db).query_db(query)
         all_recipes = []
@@ -54,6 +55,49 @@ class Recipe:
             new_recipe.users = user.User(this_rep)
             all_recipes.append(new_recipe)
         return all_recipes
+    
+    @classmethod
+    def delete_recipe(cls, id):
+        data = {'id' : id}
+        query = """DELETE FROM recipes
+        WHERE id = %(id)s
+        ;"""
+        return connectToMySQL(cls.db).query_db(query, data)
+    
+    @classmethod
+    def view_one_recipe(cls, id):
+        data = {'id' : id}
+        query = """
+        SELECT * FROM recipes
+        LEFT JOIN users
+        ON recipes.user_id = users.id
+        WHERE recipes.id = %(id)s
+        ;"""
+        result = connectToMySQL(cls.db).query_db(query, data)
+        if not result:
+            return False
+        result = result[0]
+        this_recipe = cls(result)
+        user_data = {
+                "id": result['users.id'],
+                "first_name": result['first_name'],
+                "last_name": result['last_name'],
+                "email": result['email'],
+                'password' : result['password'],
+                'confirm_password' : result['confirm_password'],
+                "created_at": result['users.created_at'],
+                "updated_at": result['users.updated_at']
+        }
+        this_recipe.users = user.User(user_data)
+        return this_recipe
+    
+    @classmethod
+    def update_recipe(cls, data):
+        query = """UPDATE recipes
+        SET name = %(name)s, description = %(description)s, instructions = %(instructions)s, date = %(date)s, under30 = %(under30)s
+        WHERE id = %(id)s
+        ;"""
+        return connectToMySQL(cls.db).query_db(query, data)
     
 
     @staticmethod
