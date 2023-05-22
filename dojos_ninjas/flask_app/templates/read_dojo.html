@@ -1,0 +1,121 @@
+{%extends 'base.html'%}
+{%block title%} Dojos and Ninjas {%endblock%}
+{%block header%} {{output.name| title}} {%endblock%}
+{%block main%}
+<div>
+    <h3>Location</h3>
+    <table>
+        <th>
+            Name
+        </th>
+        <th>
+            Street
+        </th>
+        <th>
+            City
+        </th>
+        <th>
+            State
+        </th>
+        <th>
+            Zip
+        </th>
+        <th>
+            Ninjas
+        </th>
+        <tr>
+            <td>
+                {{output.name | title}} 
+            </td>
+            <td>
+                {{output.address.street | title}}
+            </td>
+            <td>
+                {{output.address.city | title}}
+            </td>
+            <td>
+                {{output.address.state | upper}}
+            </td>
+            <td>
+                {{output.address.zip}}
+            </td>
+            <td>
+                {{output.holds | count}}
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div>
+    <h3>Ninjas</h3>
+    <table>
+        <th>
+            Ninjas
+        </th>
+        <th>
+            City
+        </th>
+        <th>
+            State
+        </th>
+        <th>
+            Options
+        </th>
+        {% for i in output.holds %}
+        <tr>
+            <td>
+                <a href="/read/ninja/{{i.id}}">{{i.name | title}}</a>
+            </td>
+            <td>
+                {{i.address.city}}
+            </td>
+            <td>
+                {{i.address.state}}
+            </td>
+            <td>
+                <a href="/read/ninja/{{i.id}}">Change Dojo</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<div>
+    <h3>
+        Edit Dojo
+    </h3>
+    <form action="/change/dojo" method="POST">
+        <!-- address_id -->
+        <input type="hidden" name="address_id" value="{{output.address.id}}">
+        <!-- street -->
+        <label for="street">
+            Street:
+        </label>
+        <input type="text" name="street" value="{{output.address.street}}">
+        <!-- city -->
+        <label for="city">
+            City:
+        </label>
+        <input type="text" name="city" value="{{output.address.city}}">
+        <!-- state -->
+        <label>
+            State Abbreviation:
+        </label>
+        <input type="text" name="state" value="{{output.address.state}}">
+        <!-- zip -->
+        <label>
+            Zip:
+        </label>
+        <input type="text" name="zip" value="{{output.address.zip}}">
+        <!-- dojo name -->
+        <label for="name">
+            Name:
+        </label>
+        <input type="text" name="name" value="{{output.name}}">
+        <!-- dojo_id -->
+        <input type="hidden" name="id" value="{{output.id}}">
+        <!-- submit -->
+        <input type="submit" value="Update Dojo">
+    </form>
+</div>
+{%endblock%}

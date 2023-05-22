@@ -1,0 +1,108 @@
+{%extends 'base.html'%}
+{%block title%} Dojos and Ninjas {%endblock%}
+{%block header%} Ninjas {%endblock%}
+{%block main%}
+<div>
+    <h3>
+        Ninjas
+    </h3>
+    <table>
+        <th>
+            ID
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            City
+        </th>
+        <th>
+            State
+        </th>
+        <th>
+            Address ID
+        </th>
+        <th>
+            Dojo
+        </th>
+        <th>
+            Options
+        </th>
+        {%for i in output%}
+        <!-- select * from NINJAS -->
+            <tr>
+                <td>
+                    {{i.id}}
+                </td>
+                <td>
+                    <a href="/read/ninja/{{i.id}}">
+                        {{i.name}}
+                    </a>
+                </td>
+                <td>
+                    {{i.address.city}}
+                </td>
+                <td>
+                    {{i.address.state}}
+                </td>
+                <td>
+                    {{i.address.id}}
+                </td>
+                <td>
+                    {{get[i.dojo_id].name}}
+                </td>
+                <td>
+                    <a href='/delete/ninja/{{i.id}}/{{i.address.id}}'>
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        {%endfor%}
+    </table>
+</div>
+
+<div>
+    <h3>Create New Ninja</h3>
+    <form action="/process/ninja" method="post">
+        <!-- name -->
+        <label for="name">
+            Name:
+        </label>
+        <input type="text" name="name">
+        <!-- dojo -->
+        <label for="dojo_id">
+            Dojo
+        </label>
+        <select name="dojo_id">
+            {%for i in get%}
+            <!-- select * from dojos -->
+                <option value="{{i.id}}">
+                    {{i.name}}
+                </option>
+            {%endfor%}
+        </select>
+        <!-- address -->
+        <label for="street">
+            Address
+        </label>
+        <input type="text" name="street">
+        <!-- city -->
+        <label for="city">
+            City
+        </label>
+        <input type="text" name="city">
+        <!-- state -->
+        <label for="state">
+            State Abbr
+        </label>
+        <input type="text" name="state">
+        <!-- zip -->
+        <lable for="zip">
+            Zip
+        </lable>
+        <input type="text" name="zip">
+        <!-- submit -->
+        <input type="submit" value="Create Ninja">
+    </form>
+</div>
+{%endblock%}

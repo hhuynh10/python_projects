@@ -1,0 +1,110 @@
+{%extends 'base.html'%}
+{%block title%} Dojos and Ninjas {%endblock%}
+{%block header%} {{output.name | title}} {%endblock%}
+{%block main%}
+<div>
+    <h3>
+        Interest
+    </h3>
+    <table>
+        <th>
+            ID
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Description
+        </th>
+        <th> 
+            Count
+        </th>
+        <tr>
+            <td>
+                {{output.id}}
+            </td>
+            <td>
+                {{output.name | title}}
+            </td>
+            <td>
+                {{output.description}}
+            </td>
+            <td>
+                {{output.holds| length}}
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div>
+    <h3>
+        Interestees
+    </h3>
+    <table>
+        <th>
+            Name
+        </th>
+        <th>
+            Location
+        </th>
+        <th>
+            Options
+        </th>
+        {% for i in output.holds %}
+            <tr>
+                <td>
+                    <a href="/read/ninja/{{i['ninja_id']}}">
+                        {{i.name | title}}
+                    </a>
+                </td>
+                <td>
+                    {{i.address.city | title}}, {{i.address.state | upper}}
+                </td>
+                <td>
+                    <a href="/delete/ninjas_interests/{{output.id}}/{{i.id}}">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<div>
+    <h3>
+        Add Interestee
+    </h3>
+    <form action="/process/ninjas_interest" method="post">
+        <!-- ninja -->
+        <label for="ninja">
+            Add someone who likes {{output.name | lower}}:
+        </label>
+        <select name="ninja_id">
+            {%for i in elements%}
+            <option value="{{i.id}}">
+                {{i.name}}
+            </option>
+            {% endfor %}
+        </select>
+        <!-- interest -->
+        <input type="hidden" name="interest_id" value="{{output.id}}">
+        <!-- submit -->
+        <input type="submit" value="Add Ninja">
+    </form>
+</div>
+<div>
+    <h3>
+        Update {{output.name|title}}
+    </h3>
+    <form action="/change/interest" method="POST">
+        <!-- interest_id -->
+        <input type="hidden" name="id" value="{{output.id}}">
+        <!-- interest name -->
+        <input type="text" name="name" value="{{output.name|title}}">
+        <!-- interest descriotion -->
+        <input type="text" name="description" value="{{output.description}}">
+        <!-- submit -->
+        <input type="submit" value="Change me!">
+    </form>
+</div>
+{%endblock%}

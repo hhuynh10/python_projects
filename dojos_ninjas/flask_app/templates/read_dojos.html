@@ -1,0 +1,104 @@
+{%extends 'base.html'%}
+{%block title%} Dojos and Ninjas {%endblock%}
+{%block header%} Dojos {%endblock%}
+{%block main%}
+<div>
+    <h3>
+        Dojos
+    </h3>
+    <table>
+        <th>
+            ID
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Street
+        </th>
+        <th>
+            City
+        </th>
+        <th>
+            State
+        </th>
+        <th>
+            Zip
+        </th>
+        <th>
+            Address ID
+        </th>
+        <th>
+            Options
+        </th>
+        {% if output %}
+        {%for i in output%}
+            <tr>
+                <td>
+                    {{i.id}}
+                </td>
+                <td>
+                    <a href="/read/dojo/{{i.id}}">
+                        {{i.name.title()}}
+                    </a>
+                </td>
+                <td>
+                    {{i.address.street}}
+                </td>
+                <td>
+                    {{i.address.city}}
+                </td>
+                <td>
+                    {{i.address.state}}
+                </td>
+                <td>
+                    {{i.address.zip}}
+                </td>
+                <td>
+                    {{i.address.id}}
+                </td>
+                <td>
+                    <a href='/delete/dojo/{{i.id}}/{{i.address.id}}'>
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        {%endfor%}
+        {% endif %}
+    </table>
+</div>
+
+<div>
+    <h3>Create A Dojo</h3>
+    <form action ="/process_new/dojo" method="post">
+        <!-- name -->
+        <label for="name">
+            Name:
+        </label>
+        <input type="text" name="name">
+        <!-- street -->
+        <label for="street">
+            Street
+        </label>
+        <input type="text" name = "street">
+        <!-- city -->
+        <label for="city">
+            City
+        </label>
+        <input type="text" name="city">
+        <!-- state -->
+        <label for="state">
+            State Abbreviation
+        </label>
+        <input type="text" name="state">
+        <!-- zip -->
+        <label for="zip">
+            Zip Code
+        </label>
+        <input type="text" name="zip">
+        <!-- submit -->
+        <input type="submit" value="New Dojo!">
+    </form>
+</div>
+
+{%endblock%}

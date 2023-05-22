@@ -1,0 +1,54 @@
+{%extends 'base.html'%}
+{%block title%} Dojos and Ninjas {%endblock%}
+{%block header%} Interests {%endblock%}
+{%block main%}
+<div>
+    <h3>
+        Interests
+    </h3>
+    <table>
+        <th>
+            Name
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Options
+        </th>
+        {%for i in output%}
+            <tr>
+                <td>
+                    <a href="/read/interest/{{i.id}}">{{i.name.title()}}</a>
+                </td>
+                <td>
+                    {{i.description}}
+                </td>
+                <td>
+                    <a href='/delete/interest/{{i.id}}'>Delete</a>
+                </td>
+            </tr>
+        {%endfor%}
+    </table>
+</div>
+
+<div>
+    <h3>
+        Create New Interest
+    </h3>
+    <form action="/process/interest" method="post">
+        <!-- name -->
+        <label for="name">
+            Name
+        </label>
+        <input type="text" name="name">
+        <!-- description -->
+        <label for="description">
+            Descripiton
+        </label>
+        <input type="text" name="description">
+        <!-- submit -->
+        <input type="submit" value="Create Interest">
+    </form>
+</div>
+{%endblock%}

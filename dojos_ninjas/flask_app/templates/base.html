@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🥷Dojos and Ninjas🥷</title>
+    <!-- FONTS -->
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed&family=Lobster&display=swap" rel="stylesheet">
+    <!-- STATIC FILES -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <!-- <img src="{{ url_for('static', filename='my_img.png') }}"> -->
+    <!-- <script type="text/javascript" defer src="{{ url_for('static', filename='script.js') }}"></script> -->
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+    </nav>
+    <header>
+        <h1 class="purple">
+            🥷{%block header%} {%endblock%}🥷
+        </h1>
+    </header>
+    <main>
+        {%block main%}
+        {%endblock%}
+    </main>
+</body>
+</html>
